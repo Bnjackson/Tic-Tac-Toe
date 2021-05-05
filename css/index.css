@@ -1,0 +1,70 @@
+/*
+GLOBAL
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+/*
+Header
+*/
+.title {
+    text-align: center;
+    margin: 3rem;
+    font-size: 2.5rem;
+}
+
+/*
+Overlay
+*/
+.overlay-heading {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.opponent-choice-container {
+    margin: 10rem auto;
+    width: 60%;
+}
+
+.player-choice {
+
+}
+
+.computer-choice {
+
+}
+/*
+Gameboard
+*/
+.gameboard {
+    display: none;
+}
+
+/*
+player1 side
+*/
+.player1-side {
+    display: none;
+}
+
+/*
+player2 side
+*/
+.player2-side {
+    display: none;
+}
+
+/*
+Footer
+*/
