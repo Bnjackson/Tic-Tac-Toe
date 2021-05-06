@@ -10,21 +10,25 @@
 </head>
 <body>
     <header>
-        <div class="title">
+        <div class="title non-selectable">
             <h1>Tic-Tac-Toe</h1>
         </div>
     </header>
-    <div class="overlay">
-        <div class="overlay-heading">
+    <div class="opponent-screen non-selectable">
+        <div class="screen-heading">
             <h2>Choose your opponent?</h2>
         </div>
-        <div class="opponent-choice-container">
+        <div class="opponent-choice-container non-selectable">
             <div class="player-choice">
-                <img src="/resources/svg/Player.svg" alt="Player Icon">
+                <div class="image-wrapper">
+                    <img class="opponent-icons" src="/resources/svg/Player.svg" alt="Player Icon">
+                </div> 
                 <p>Player</p>
             </div>
             <div class="computer-choice">
-                <img src="/resources/svg/Player.svg" alt="Computer Icon">
+                <div class="image-wrapper">
+                    <img class="opponent-icons" src="/resources/svg/computer.svg" alt="Computer Icon">
+                </div>
                 <p>Computer</p>
             </div>
         </div>
