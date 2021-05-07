@@ -88,7 +88,7 @@ Opponent Screen
 Message
 */
 .message {
-    
+    display: none;
     text-align: center;
     font-size: 2rem;
     padding-bottom: 2rem;
@@ -98,7 +98,7 @@ Message
 Gameboard
 */
 main {
-    display: flex;
+    display: none;
 }
 
 .gameboard {
