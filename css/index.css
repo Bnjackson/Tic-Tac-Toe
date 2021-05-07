@@ -36,7 +36,6 @@ Header
 Opponent Screen
 */
 .opponent-screen {
-    display: none;
     height: 80vh;
 }
 
@@ -85,18 +84,21 @@ Opponent Screen
     background-color: darkgrey;
     border-radius: 5%;
 }
+/*
+Message
+*/
+.message {
+    
+    text-align: center;
+    font-size: 2rem;
+    padding-bottom: 2rem;
+}
 
 /*
 Gameboard
 */
 main {
     display: flex;
-}
-
-.message {
-    text-align: center;
-    font-size: 2rem;
-    padding-bottom: 2rem;
 }
 
 .gameboard {
@@ -161,6 +163,12 @@ main p {
     font-size: 3.5rem;
 }
 
+.player-side-container {
+    padding-top: 35%;
+    padding-bottom: 35%;
+    width: 60%;
+    margin: 0 auto;
+}
 /*
 player1 side
 */
@@ -192,5 +200,6 @@ player2 side
 /*
 Footer
 */
+
 
 
