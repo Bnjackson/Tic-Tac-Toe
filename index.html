@@ -14,18 +14,18 @@
             <h1>Tic-Tac-Toe</h1>
         </div>
     </header>
-    <div class="opponent-screen non-selectable">
+    <div class="opponent-screen non-selectable" id="opponentScreen">
         <div class="screen-heading">
             <h2>Choose your opponent?</h2>
         </div>
         <div class="opponent-choice-container non-selectable">
-            <div class="player-choice">
+            <div class="player-choice" id="secondPlayer">
                 <div class="image-wrapper">
                     <img class="opponent-icons" src="/resources/svg/Player.svg" alt="Player Icon">
                 </div> 
                 <p>Player</p>
             </div>
-            <div class="computer-choice">
+            <div class="computer-choice" id="computer">
                 <div class="image-wrapper">
                     <img class="opponent-icons" src="/resources/svg/Computer.svg" alt="Computer Icon">
                 </div>
@@ -33,10 +33,10 @@
             </div>
         </div>
     </div>
-    <div class="message">
+    <div class="message" id="message">
         <h3>Player 1's turn:</h3>
     </div>
-    <main>
+    <main id="game">
         <section class="player1-side">
             <div class="player-side-container">
                 <div class="player1-name">
@@ -52,15 +52,15 @@
         </section>
         <section class="gameboard">
             <div class="board">
-                <div class="board-square"></div>
-                <div class="board-square"></div>
-                <div class="board-square"></div>
-                <div class="board-square"></div>
-                <div class="board-square"></div>
-                <div class="board-square"></div>
-                <div class="board-square"></div>
-                <div class="board-square"></div>
-                <div class="board-square"></div>
+                <div data-value="1" class="board-square"></div>
+                <div data-value="2" class="board-square"></div>
+                <div data-value="3" class="board-square"></div>
+                <div data-value="4" class="board-square"></div>
+                <div data-value="5" class="board-square"></div>
+                <div data-value="6" class="board-square"></div>
+                <div data-value="7" class="board-square"></div>
+                <div data-value="8" class="board-square"></div>
+                <div data-value="9" class="board-square"></div>
             </div>
             <div class="restart-button">
                 <button id="restart-button">Restart</button>
@@ -72,7 +72,7 @@
                     <input type="text" placeholder="Player 2">
                 </div>
                 <div class="player2-icon">
-                    <img src="" alt="Player2 Icon.">
+                    <img id="player2Icon" src="" alt="Player2 Icon.">
                 </div>
                 <div class="player2-score">
                     <p id="player2-score">0</p>
