@@ -116,6 +116,7 @@ main {
 .board-square {
     width: 100%;
     padding-top: 85%;
+    position: relative;
 }
 
 .board :nth-child(1),
@@ -138,6 +139,15 @@ main {
 
 .board-square:hover {
    background-color: grey; 
+}
+
+#mark {
+    font-size: 15rem;
+    border: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .restart-button {
