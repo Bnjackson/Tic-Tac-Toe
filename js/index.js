@@ -1,6 +1,10 @@
 "use strict"
 const game = {
-    gameBoard: [ 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    gameBoard: [ 0, 1, 2,
+                 3, 4, 5,
+                 6, 7, 8],
+    turn: "player",
+    turnCount: 0,
     updateGameBoard: function(square, playerOrOpponent) {
         if(playerOrOpponent === "player") {
             this.gameBoard.splice([square.target.dataset.value], 1, "x");
@@ -11,8 +15,6 @@ const game = {
         }
         this.checkIfWinner(this.gameBoard);
     },
-    turn: "player",
-    turnCount: 0,
     checkIfWinner: function(array) {
         if(array[0] === array[1] && array[1] === array[2]) {
             addScore(array[0]);
@@ -39,6 +41,10 @@ const game = {
             console.log("New Round")
             this.newRound();
         }
+        else {
+            console.log(opponent);
+            this.nextTurn();
+        }
         function addScore(mark) {
             if(mark === "x") {
                 player.score++;
@@ -48,6 +54,21 @@ const game = {
                 opponent.score++;
                 console.log(opponent.score);
             }
+        }
+    },
+    nextTurn: function() {
+        console.log(opponent.name);
+        if(this.turn === "player" && opponent.name === "computer") {
+            this.turn = opponent.name;
+            opponent.turn();
+        }
+        else if (this.turn === "player" && opponent.name === "secondPlayer"){
+            this.turn = "player";
+            this.turn = opponent.name;
+            console.log("yes");
+        }
+        else {
+            this.turn = "player";
         }
     },
     newRound: function() {
@@ -85,17 +106,46 @@ function opponentChoice(playerChoice) {
 function OpponentConstructor(choice) {
     if(choice === "computer") {
         return {
+            name: "computer",
             score: 0,
             turn: function() {
+                function addMark(square) {
+                    
+                }
+                function computerAI(array) {
+                    const mark = "0";
+                    function checkHorizontalMatches() {
+                        for(let i = 0; i < array.length; i++) {
+                            for(let j = 0; j < array.length; j++) {
+                                if(array[i] === mark && array[j + 1] === mark && array[j+ 2] === Number) {
+                                    addMark(array[j + 2]);
+                                }
+                            }
+                        } 
+                    }
+                    function selectRandomSquare() {
+                    
+                    }
 
+                }
+               this.turn.computerAI(game.gameBoard);
             }
         }
     }
     else {
         return {
+            name: "secondPlayer",
             score: 0,
-            turn: function() {
-
+            turn: function(event) {
+                function addMark (square) {
+                    const mark = document.createElement("span");
+                    mark.id = "mark";
+                    mark.innerHTML = "0";
+                    console.log(square.target);
+                    square.target.appendChild(mark);
+                }
+                addMark(event);
+                game.updateGameBoard(event, "secondPlayer");
             }
 
         }
@@ -105,13 +155,15 @@ function OpponentConstructor(choice) {
 const boardSquare = document.getElementsByClassName("board-square");
 
 for(let i = 0; i < boardSquare.length; i++) {
-    boardSquare[i].addEventListener("click", (event) => {
-        console.log(event.target)
-        if(game.turn === "player" && event.target.childNodes.length ===  0) {
-            player.turn(event);
-        }
-        else if(game.turn === "secondPlayer" && event.target.childNodes.length ===  0) {
-            computer.turn(event);
-        }
-    })
+    boardSquare[i].addEventListener("click", (event) => {addMark(event) });
+}
+
+function addMark (event) {
+    console.log(event.target)
+    if(game.turn === "player" && event.target.childNodes.length ===  0) {
+        player.turn(event);
+    }
+    else if(game.turn === "secondPlayer" && event.target.childNodes.length ===  0) {
+        opponent.turn(event);
+    }
 }
