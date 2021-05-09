@@ -1,8 +1,7 @@
 "use strict"
 const game = {
-    gameBoard: [ , , , , , , , , ],
+    gameBoard: [ 1, 2, 3, 4, 5, 6, 7, 8, 9],
     updateGameBoard: function(square, playerOrOpponent) {
-        console.log(square.target.dataset.value);
         if(playerOrOpponent === "player") {
             this.gameBoard.splice([square.target.dataset.value], 1, "x");
             console.log(this.gameBoard);
@@ -16,32 +15,39 @@ const game = {
     turnCount: 0,
     checkIfWinner: function(array) {
         if(array[0] === array[1] && array[1] === array[2]) {
-            console.log("yes");
-            this.turn === "player" ? console.log("Player wins") : console.log("Opponent wins");
+            addScore(array[0]);
         }
-        else if(array[3] === array[4] === array[5]) {
-
+        else if(array[3] === array[4] && array[4] === array[5]) {
+            addScore(array[3]);
         }
-        else if(array[6] === array[7] === array[8]) {
-
+        else if(array[6] === array[7] && array[7] === array[8]) {
+            addScore(array[6]);
         }
-        else if(array[0] === array[3] === array[6]) {
-
+        else if(array[0] === array[3] && array[3] === array[6]) {
+            addScore(array[0]);
         }
-        else if(array[1] === array[4] === array[7]) {
-
+        else if(array[1] === array[4] && array[4] === array[7]) {
+            addScore(array[1]);
         }
-        else if(array[0] === array[4] === array[8]) {
-
+        else if(array[0] === array[4] && array[4] === array[8]) {
+            addScore(array[0]);
         }
-        else if(array[2] === array[4] === array[6]) {
-
+        else if(array[2] === array[4] && array[4] === array[6]) {
+            addScore(array[2]);
         }
         else if(array.every((element) => {element === String})) {
             console.log("New Round")
+            this.newRound();
         }
-        else {
-
+        function addScore(mark) {
+            if(mark === "x") {
+                player.score++;
+                console.log(player.score);
+            }
+            else {
+                opponent.score++;
+                console.log(opponent.score);
+            }
         }
     },
     newRound: function() {
@@ -54,10 +60,10 @@ const player = {
         function addMark (square) {
             const mark = document.createElement("span");
             mark.id = "mark";
-            mark.innerHTML = "X"
+            mark.innerHTML = "X";
             square.target.appendChild(mark);
         }
-        addMark(event)
+        addMark(event);
         game.updateGameBoard(event, "player");
     },
     score: 0,
