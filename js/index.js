@@ -19,6 +19,17 @@ const game = {
         this.checkIfWinner(this.gameBoard);
     },
     checkIfWinner: function(array) {
+        const addScore = mark => {
+            if(mark === "x") {
+                player.score++;
+                document.getElementById("player1-score").innerHTML = player.score;
+            }
+            else {
+                opponent.score++;
+                document.getElementById("player2-score").innerHTML = opponent.score;
+            }
+            this.newRound();
+        }
         if(array[0] === array[1] && array[1] === array[2]) {
             addScore(array[0]);
         }
@@ -34,32 +45,25 @@ const game = {
         else if(array[1] === array[4] && array[4] === array[7]) {
             addScore(array[1]);
         }
+        else if(array[2] === array[5] && array[2] === array[8]) {
+            addScore(array[2])
+        }
         else if(array[0] === array[4] && array[4] === array[8]) {
             addScore(array[0]);
         }
         else if(array[2] === array[4] && array[4] === array[6]) {
             addScore(array[2]);
         }
-        else if(array.every((element) => {element === String})) {
-            console.log("New Round")
+        else if(array.every((element) => {return typeof element === "string"})) {
+            console.log("New Round");
             this.newRound();
         }
         else {
             this.nextTurn();
         }
-        function addScore(mark) {
-            if(mark === "x") {
-                player.score++;
-                console.log(player.score);
-            }
-            else {
-                opponent.score++;
-                console.log(opponent.score);
-            }
-        }
     },
     nextTurn: function() {
-        console.log(opponent.name);
+        console.log(this.turn);
         if(this.turn === "player" && opponent.name === "computer") {
             this.turn = opponent.name;
             opponent.turn();
@@ -72,7 +76,27 @@ const game = {
         }
     },
     newRound: function() {
+        for(let i = 0; i < boardSquare.length; i++) {
+            console.log();
+            boardSquare[i].removeEventListener("click", addMark, false);
+        }
+        const clearBoard = () => {
+            for(let i = 0; i < boardSquare.length; i++) {
+                if(boardSquare[i].childNodes.length === 1) {
+                    boardSquare[i].removeChild(boardSquare[i].firstChild);
+                }
+                this.gameBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+            }
+        }
+        setTimeout(function() {clearBoard();}, 1300);
+        console.log(this.turn);
+        listenForBoardEvent();
+        console.log(this.turn);
+        if(this.turn === "computer") {
 
+            opponent.turn();
+        }
+        
     }
 };
 
@@ -167,10 +191,12 @@ function OpponentConstructor(choice) {
 }
 
 const boardSquare = document.getElementsByClassName("board-square");
-
-for(let i = 0; i < boardSquare.length; i++) {
-    boardSquare[i].addEventListener("click", (event) => {addMark(event) });
+function listenForBoardEvent() {
+    for(let i = 0; i < boardSquare.length; i++) {
+        boardSquare[i].addEventListener("click", addMark);
+    }
 }
+listenForBoardEvent();
 
 function addMark (event) {
     if(game.turn === "player" && event.target.childNodes.length ===  0) {
