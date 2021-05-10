@@ -10,8 +10,11 @@ const game = {
             this.gameBoard.splice([square.target.dataset.value], 1, "x");
             console.log(this.gameBoard);
         }
-        else {
+        else if(playerOrOpponent === "secondPlayer"){
             this.gameBoard.splice([square.target.dataset.value], 1, "0");
+        }
+        else {
+            this.gameBoard.splice(square, 1, "0");
         }
         this.checkIfWinner(this.gameBoard);
     },
@@ -42,7 +45,6 @@ const game = {
             this.newRound();
         }
         else {
-            console.log(opponent);
             this.nextTurn();
         }
         function addScore(mark) {
@@ -63,9 +65,7 @@ const game = {
             opponent.turn();
         }
         else if (this.turn === "player" && opponent.name === "secondPlayer"){
-            this.turn = "player";
             this.turn = opponent.name;
-            console.log("yes");
         }
         else {
             this.turn = "player";
@@ -110,25 +110,40 @@ function OpponentConstructor(choice) {
             score: 0,
             turn: function() {
                 function addMark(square) {
-                    
+                    const mark = document.createElement("span");
+                    mark.id = "mark";
+                    mark.innerHTML = "0";
+                    for(let i = 0; i < boardSquare.length; i++) {
+                        if(boardSquare[i].dataset.value == square) {
+                            boardSquare[i].appendChild(mark);
+                        }
+                    }
+                    game.updateGameBoard(square, );
                 }
-                function computerAI(array) {
-                    const mark = "0";
+                function computerAI(arr) {
                     function checkHorizontalMatches() {
-                        for(let i = 0; i < array.length; i++) {
-                            for(let j = 0; j < array.length; j++) {
-                                if(array[i] === mark && array[j + 1] === mark && array[j+ 2] === Number) {
-                                    addMark(array[j + 2]);
+                        for(let i = 0; i < arr.length; i++) {
+                            for(let j = 0; j < arr.length; j++) {
+                                if(arr[i] === mark && array[j + 1] === mark && arr[j + 2] === Number) {
+                                    addMark(arr[j + 2]);
                                 }
                             }
                         } 
                     }
                     function selectRandomSquare() {
-                    
+                        const emptySpaces = [];
+                        for(let i = 0; i < arr.length; i++) {
+                            if(arr[i] !== "x" && arr[i] !== "0") {
+                                emptySpaces.push(arr[i]);
+                            }
+                        }
+                        const randomNumber = Math.floor(Math.random() * emptySpaces.length);
+                        addMark(arr[emptySpaces[randomNumber]]);
                     }
+                    selectRandomSquare();
 
                 }
-               this.turn.computerAI(game.gameBoard);
+               computerAI(game.gameBoard);
             }
         }
     }
@@ -141,7 +156,6 @@ function OpponentConstructor(choice) {
                     const mark = document.createElement("span");
                     mark.id = "mark";
                     mark.innerHTML = "0";
-                    console.log(square.target);
                     square.target.appendChild(mark);
                 }
                 addMark(event);
@@ -159,7 +173,6 @@ for(let i = 0; i < boardSquare.length; i++) {
 }
 
 function addMark (event) {
-    console.log(event.target)
     if(game.turn === "player" && event.target.childNodes.length ===  0) {
         player.turn(event);
     }
