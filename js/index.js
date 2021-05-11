@@ -8,7 +8,6 @@ const game = {
     updateGameBoard: function(square, playerOrOpponent) {
         if(playerOrOpponent === "player") {
             this.gameBoard.splice([square.target.dataset.value], 1, "x");
-            console.log(this.gameBoard);
         }
         else if(playerOrOpponent === "secondPlayer"){
             this.gameBoard.splice([square.target.dataset.value], 1, "0");
@@ -16,6 +15,7 @@ const game = {
         else {
             this.gameBoard.splice(square, 1, "0");
         }
+        console.log(this.gameBoard);
         this.checkIfWinner(this.gameBoard);
     },
     checkIfWinner: function(array) {
@@ -29,7 +29,7 @@ const game = {
                 document.getElementById("player2-score").innerHTML = opponent.score;
             }
             this.newRound();
-        }
+        };
         if(array[0] === array[1] && array[1] === array[2]) {
             addScore(array[0]);
         }
@@ -59,20 +59,24 @@ const game = {
             this.newRound();
         }
         else {
+            console.log("else");
             this.nextTurn();
         }
     },
     nextTurn: function() {
         console.log(this.turn);
         if(this.turn === "player" && opponent.name === "computer") {
+            console.log("first");
             this.turn = opponent.name;
             opponent.turn();
         }
         else if (this.turn === "player" && opponent.name === "secondPlayer"){
             this.turn = opponent.name;
+            listenForBoardEvent();
         }
         else {
             this.turn = "player";
+            listenForBoardEvent();
         }
     },
     newRound: function() {
@@ -87,16 +91,10 @@ const game = {
                 }
                 this.gameBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
             }
+            console.log("clearBoard");
+            this.nextTurn();
         }
-        setTimeout(function() {clearBoard();}, 1300);
-        console.log(this.turn);
-        listenForBoardEvent();
-        console.log(this.turn);
-        if(this.turn === "computer") {
-
-            opponent.turn();
-        }
-        
+        setTimeout(() => clearBoard(), 1000);
     }
 };
 
@@ -142,7 +140,7 @@ function OpponentConstructor(choice) {
                             boardSquare[i].appendChild(mark);
                         }
                     }
-                    game.updateGameBoard(square, );
+                    game.updateGameBoard(square, "computer");
                 }
                 function computerAI(arr) {
                     function checkHorizontalMatches() {
@@ -162,7 +160,7 @@ function OpponentConstructor(choice) {
                             }
                         }
                         const randomNumber = Math.floor(Math.random() * emptySpaces.length);
-                        addMark(arr[emptySpaces[randomNumber]]);
+                        setTimeout(() => addMark(arr[emptySpaces[randomNumber]]), 1000);
                     }
                     selectRandomSquare();
 
