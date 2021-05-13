@@ -15,10 +15,9 @@ const game = {
         else {
             this.gameBoard.splice(square, 1, "0");
         }
-        console.log(this.gameBoard);
         this.checkIfWinner(this.gameBoard);
     },
-    checkIfWinner: function(array) {
+    checkIfWinner: function(arr) {
         const addScore = mark => {
             if(mark === "x") {
                 player.score++;
@@ -30,43 +29,39 @@ const game = {
             }
             this.newRound();
         };
-        if(array[0] === array[1] && array[1] === array[2]) {
-            addScore(array[0]);
+        if(arr[0] === arr[1] && arr[1] === arr[2]) {
+            addScore(arr[0]);
         }
-        else if(array[3] === array[4] && array[4] === array[5]) {
-            addScore(array[3]);
+        else if(arr[3] === arr[4] && arr[4] === arr[5]) {
+            addScore(arr[3]);
         }
-        else if(array[6] === array[7] && array[7] === array[8]) {
-            addScore(array[6]);
+        else if(arr[6] === arr[7] && arr[7] === arr[8]) {
+            addScore(arr[6]);
         }
-        else if(array[0] === array[3] && array[3] === array[6]) {
-            addScore(array[0]);
+        else if(arr[0] === arr[3] && arr[3] === arr[6]) {
+            addScore(arr[0]);
         }
-        else if(array[1] === array[4] && array[4] === array[7]) {
-            addScore(array[1]);
+        else if(arr[1] === arr[4] && arr[4] === arr[7]) {
+            addScore(arr[1]);
         }
-        else if(array[2] === array[5] && array[2] === array[8]) {
-            addScore(array[2])
+        else if(arr[2] === arr[5] && arr[2] === arr[8]) {
+            addScore(arr[2])
         }
-        else if(array[0] === array[4] && array[4] === array[8]) {
-            addScore(array[0]);
+        else if(arr[0] === arr[4] && arr[4] === arr[8]) {
+            addScore(arr[0]);
         }
-        else if(array[2] === array[4] && array[4] === array[6]) {
-            addScore(array[2]);
+        else if(arr[2] === arr[4] && arr[4] === arr[6]) {
+            addScore(arr[2]);
         }
-        else if(array.every((element) => {return typeof element === "string"})) {
-            console.log("New Round");
+        else if(arr.every((element) => {return typeof element === "string"})) {
             this.newRound();
         }
         else {
-            console.log("else");
             this.nextTurn();
         }
     },
     nextTurn: function() {
-        console.log(this.turn);
         if(this.turn === "player" && opponent.name === "computer") {
-            console.log("first");
             this.turn = opponent.name;
             opponent.turn();
         }
@@ -81,7 +76,6 @@ const game = {
     },
     newRound: function() {
         for(let i = 0; i < boardSquare.length; i++) {
-            console.log();
             boardSquare[i].removeEventListener("click", addMark, false);
         }
         const clearBoard = () => {
@@ -91,7 +85,6 @@ const game = {
                 }
                 this.gameBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
             }
-            console.log("clearBoard");
             this.nextTurn();
         }
         setTimeout(() => clearBoard(), 1000);
@@ -120,7 +113,6 @@ document.getElementById("secondPlayer").addEventListener("click", function(){opp
 function opponentChoice(playerChoice) {
     document.getElementById("opponentScreen").style.display = "none";
     document.getElementById("game").style.display = "flex";
-    document.getElementById("message").style.display = "block";
     playerChoice === "computer"? document.getElementById("player2Icon").src = "/resources/svg/Computer.svg": document.getElementById("player2Icon").src = "/resources/svg/Player.svg";
     opponent = OpponentConstructor(playerChoice);
 }
@@ -142,27 +134,70 @@ function OpponentConstructor(choice) {
                     }
                     game.updateGameBoard(square, "computer");
                 }
-                function computerAI(arr) {
-                    function checkHorizontalMatches() {
-                        for(let i = 0; i < arr.length; i++) {
-                            for(let j = 0; j < arr.length; j++) {
-                                if(arr[i] === mark && array[j + 1] === mark && arr[j + 2] === Number) {
-                                    addMark(arr[j + 2]);
+                function computerAI(board) {
+                    const emptySquares = [];
+                    function checkForwinningMove() {
+                        for(let i = 0; i < board.length; i+=3) {
+                            if(board[i] === board[i + 1] || board[i] === board[i + 2] || board[i + 1] === board[i + 2]) {
+                                if(typeof board[i] === "number" && board[i + 1] === "0" && board[i + 2] === "0") {
+                                    return board[i];
+                                }
+                                else if(typeof board[i + 1] === "number" && board[i] === "0" && board[i + 2] === "0") {
+                                    return board[i + 1];
+                                }
+                                else if(typeof board[i + 2] === "number" && board[i] === "0" && board[i + 1] === "0") {
+                                    return board[i + 2];
                                 }
                             }
-                        } 
-                    }
-                    function selectRandomSquare() {
-                        const emptySpaces = [];
-                        for(let i = 0; i < arr.length; i++) {
-                            if(arr[i] !== "x" && arr[i] !== "0") {
-                                emptySpaces.push(arr[i]);
+                        }
+                        for(let i = 0; i < board.length; i++) {
+                            if(board[i] === board[i + 3] || board[i] === board[i + 6] || board[i + 3] === board[i + 6]) {
+                                if(typeof board[i] === "number" && board[i + 3] === "0" && board[i + 6] === "0") {
+                                    return board[i];
+                                }
+                                else if(typeof board[i + 3] === "number" && board[i] === "0" && board[i + 6] === "0") {
+                                    return board[i + 3];
+                                }
+                                else if(typeof board[i + 6] === "number" && board[i] === "0" && board[i + 3] === "0") {
+                                    return board[i + 6];
+                                }
                             }
                         }
-                        const randomNumber = Math.floor(Math.random() * emptySpaces.length);
-                        setTimeout(() => addMark(arr[emptySpaces[randomNumber]]), 1000);
+                        if(board[2] === board[4] || board[2] === board[6] || board[4] === board[6]) {
+                            if(typeof board[2] === "number" && board[4] === "0" && board[6] === "0"){
+                                return board[2];
+                            }
+                            else if(typeof board[4] === "number" && board[2] === "0" && board[6] === "0") {
+                                return board[4];
+                            }
+                            else if(typeof board[6] === "number" && board[2] === "0" && board[4] === "0") {
+                                return board[6];
+                            }
+                        }
+                        else if(board[0] === board[4] || board[0] === board[8] || board[4] === board[8]) {
+                            if(typeof board[0] === "number" && board[4] === "0" && board[8] === "0"){
+                                return board[0];
+                            }
+                            else if(typeof board[4] === "number" && board[0] === "0" && board[8] === "0") {
+                                return board[4];
+                            }
+                            else if(typeof board[8] === "number" && board[4] === "0" && board[0] === "0") {
+                                return board[8];
+                            }
+                        } 
+                        return false;
                     }
-                    selectRandomSquare();
+                    function selectRandomSquare() {
+                        for(let i = 0; i < board.length; i++) {
+                            if(board[i] !== "x" && board[i] !== "0") {
+                                emptySquares.push(board[i]);
+                            }
+                        }
+                        const randomNumber = Math.floor(Math.random() * emptySquares.length);
+                        setTimeout(() => addMark(board[emptySquares[randomNumber]]), 1000);
+                    }
+                    const winningMove = checkForwinningMove();
+                    winningMove ? addMark(winningMove): selectRandomSquare();
 
                 }
                computerAI(game.gameBoard);
