@@ -1,10 +1,10 @@
 "use strict"
+// Game Object stores gameboard aswell as controlling game flow(updating gameboard, checking if won, next turn, next round)
 const game = {
     gameBoard: [ 0, 1, 2,
                  3, 4, 5,
                  6, 7, 8],
     turn: "player",
-    turnCount: 0,
     updateGameBoard: function(square, playerOrOpponent) {
         if(playerOrOpponent === "player") {
             this.gameBoard.splice([square.target.dataset.value], 1, "x");
@@ -74,6 +74,7 @@ const game = {
             listenForBoardEvent();
         }
     },
+    //New round resets gameboard both array and DOM.
     newRound: function() {
         for(let i = 0; i < boardSquare.length; i++) {
             boardSquare[i].removeEventListener("click", addMark, false);
@@ -107,6 +108,10 @@ const player = {
 
 let opponent;
 
+/* 
+Opponent Choice
+*/
+
 document.getElementById("computer").addEventListener("click", function(){opponentChoice("computer")});
 document.getElementById("secondPlayer").addEventListener("click", function(){opponentChoice("secondPlayer")});
 
@@ -117,6 +122,8 @@ function opponentChoice(playerChoice) {
     opponent = OpponentConstructor(playerChoice);
 }
 
+
+//Opponent object is based on user choice. Either compueter or second player is created using a factory function.
 function OpponentConstructor(choice) {
     if(choice === "computer") {
         return {
@@ -136,6 +143,9 @@ function OpponentConstructor(choice) {
                 }
                 function computerAI(board) {
                     const emptySquares = [];
+                    /*Winning combos [0,1,2] [3,4,5] [6,7,8] [0,3,6] [1,4,7] [2,5,8] [2, 4, 6] [0, 4, 8] 
+                    The function will loop over board array to check if computer is one move away from winning if so return board space to win else return false and choose a random square.
+                    */
                     function checkForwinningMove() {
                         for(let i = 0; i < board.length; i+=3) {
                             if(board[i] === board[i + 1] || board[i] === board[i + 2] || board[i + 1] === board[i + 2]) {
@@ -187,6 +197,7 @@ function OpponentConstructor(choice) {
                         } 
                         return false;
                     }
+                    //Random square is called if there is not a winning move avalible. 
                     function selectRandomSquare() {
                         for(let i = 0; i < board.length; i++) {
                             if(board[i] !== "x" && board[i] !== "0") {
@@ -223,6 +234,9 @@ function OpponentConstructor(choice) {
     }
 }
 
+/*
+Board Listener
+*/
 const boardSquare = document.getElementsByClassName("board-square");
 function listenForBoardEvent() {
     for(let i = 0; i < boardSquare.length; i++) {
